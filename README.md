@@ -124,6 +124,8 @@ Once all plugins are installed, Jenkins will restart. If it hasn't restarted, ru
 
 ``sudo systemctl restart jenkins``
 
+
+
 Verify everything is working for Blue Ocean by logging in. An "Open Blue Ocean" link should show up in the sidebar. Click it, and it will take you to the "Blue Ocean" screen, where we will have to add a project.
 
 A welcome screen will appear, telling you it is time to create your first pipeline.
@@ -195,10 +197,38 @@ Reconnect to the system and check the docker version by executing this statement
 
 ``docker -v``
 
+* List all containers (only IDs)
+
+``docker ps -aq``
+
+* Stop all running containers
+``docker stop $(docker ps -aq)``
+
+* Remove all containers
+`` docker rm $(docker ps -aq) ``
+
+* Remove all images
+``docker rmi $(docker images -q)``
+
+* Jenkins needs to be added to the group docker
+
+``sudo usermod -a -G docker jenkins``
+
+Then restart Jenkins
+
+
 #### Step 3: Pick AWS Kubernetes as a Service, or build your own Kubernetes cluster.
 * Use Ansible or CloudFormation to build your “infrastructure”; i.e., the Kubernetes Cluster.
 * It should create the EC2 instances (if you are building your own), set the correct networking settings, and deploy software to these instances.
 * As a final step, the Kubernetes cluster will need to be initialized. The Kubernetes cluster initialization can either be done by hand, or with Ansible/Cloudformation at the student’s discretion.
+
+Image is available at [dockerhub](https://hub.docker.com/repository/docker/piushvaish/capstone-project-jupyter/general)
+
+run ``sh run_kubernetes.sh``
+
+###### the text from extract is available at : 
+
+* out_kubernetes.txt
 
 #### Step 4: Build your pipeline
 * Construct your pipeline in your GitHub repository.
@@ -206,6 +236,9 @@ Reconnect to the system and check the docker version by executing this statement
 * Configure a deployment pipeline.
 * Include your Dockerfile/source code in the Git repository.
 * Include with your Linting step both a failed Linting screenshot and a successful Linting screenshot to show the Linter working properly.
+![Failed Linting](/images/lintfail.PNG)
+
+![Successful Linting](/images/lintingworking.PNG)
 
 
 #### Step 5: Test your pipeline
@@ -214,5 +247,3 @@ Reconnect to the system and check the docker version by executing this statement
 * Take a screenshot of the Jenkins pipeline showing deployment and a screenshot of your AWS EC2 page showing the newly created (for blue/green) or modified (for rolling) instances. Make sure you name your instances differently between blue and green deployments.
 
 
-* Blue/Green branch corresponds to the Blue/Green deployment strategy. Make sure that you checkout branches "blue" and "green" to see how blue/green deployment was performed in the course.
-* You can create any more branches for a multiple pipeline set-up, as directed in the demonstration video. 
