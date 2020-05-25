@@ -2,25 +2,26 @@
 import groovy.json.JsonOutput
 //
 pipeline {
-  environment {
-        dockerhubCredentials = 'dockercredentials'
-    }
-  
+    
   options {
       buildDiscarder(logRotator(numToKeepStr:'10'))
       timeout (time: 120, unit: 'MINUTES')
     } 
-    agent { dockerfile true }
+    agent none
     stages {
-      stage('Test') {
+      stage('DockerFile') {
+            agent {
+                dockerfile true
+            }
             steps {
                 sh 'node --version'
             }
         }
     stage('Lint Dockerfile') {
+      agent {
+                docker {image 'hadolint/hadolint:latest-debian' }
+            }
       steps {
-          script {
-              docker.image('hadolint/hadolint:latest-debian').inside() {
                   sh 'hadolint ./Dockerfile | tee -a hadolint_lint.txt'
                   sh '''
                       lintErrors=$(stat --printf="%s"  hadolint_lint.txt)
@@ -36,5 +37,3 @@ pipeline {
           }
       }
   }
-}
-}
