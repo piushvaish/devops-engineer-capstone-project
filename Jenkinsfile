@@ -7,9 +7,9 @@ pipeline {
       buildDiscarder(logRotator(numToKeepStr:'10'))
       timeout (time: 120, unit: 'MINUTES')
     } 
-    agent any
+    agent none
     stages {
-    
+      
     stage('Lint Dockerfile') {
       agent {
             docker {image 'hadolint/hadolint:latest-debian' }
@@ -28,26 +28,14 @@ pipeline {
             '''
               }
           }
-    
-      stage('DockerFile') {
-            agent {
-                docker {image 'piushvaish/capstone-project-jupyter:latest'}
-            }
-            steps {
-                sh 'docker build -t jupyter .'
-                sh 'docker run -it -p 8888:8888 jupyter'
-            }
-        }    
-      stage("Cleaning Docker up") {
-        agent {
-        docker {image 'piushvaish/capstone-project-jupyter:latest'}
-        }
-        steps {
-                script {
-                    sh "echo 'Cleaning Docker up'"
-                    sh "docker system prune"
-                }
-            }
-        }
+    stage('Build DockerFile') {
+          agent {
+              dockerfile true
+          }
+          steps {
+              sh 'node --version'
+          }
       }
-  }
+            
+    }
+}
