@@ -124,6 +124,8 @@ Once all plugins are installed, Jenkins will restart. If it hasn't restarted, ru
 
 ``sudo systemctl restart jenkins``
 
+
+
 Verify everything is working for Blue Ocean by logging in. An "Open Blue Ocean" link should show up in the sidebar. Click it, and it will take you to the "Blue Ocean" screen, where we will have to add a project.
 
 A welcome screen will appear, telling you it is time to create your first pipeline.
@@ -208,6 +210,11 @@ Reconnect to the system and check the docker version by executing this statement
 * Remove all images
 ``docker rmi $(docker images -q)``
 
+* Jenkins needs to be added to the group docker
+
+``sudo usermod -a -G docker jenkins``
+
+Then restart Jenkins
 
 
 #### Step 3: Pick AWS Kubernetes as a Service, or build your own Kubernetes cluster.
