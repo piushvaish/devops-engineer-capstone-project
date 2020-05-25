@@ -9,12 +9,11 @@ import s3fs
 import errno
 import io
 import warnings
-import configparser
-
-config = configparser.ConfigParser()
-config.read_file(open('config.ini'))
-key = config.get('aws', 'key')
-secret = config.get('aws', 'secret')
+import secrets_manager
+import json
+get_secret = json.loads(secrets_manager.get_secret())
+key = get_secret.get('key')
+secret = get_secret.get('secret')
 s3 = s3fs.S3FileSystem(anon = False, key=key, secret=secret)
 
 #fake data
