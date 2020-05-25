@@ -8,55 +8,13 @@ pipeline {
     } 
 
 
-  parameters {   
-      string (name: 'BUCKET_NAME',
-          description: "Choose BUCKET to run the job",
-          defaultValue:'pv-capstone-project')      
-      booleanParam (name: 'CREATE_REPORT',
-            description: "This allows to test a dryrun  what files will be created based on configuration",
-              defaultValue: true) 
-      booleanParam (name: 'COPY_S3',
-            description: "This allows to copy files to S3",
-              defaultValue: true) 
-    }
-    
-  agent {
-    dockerfile true 
-  }
-    
-
-stages {     
-    stage ('CONFIGURE: Check Python Template  ') {
-        when {
-            expression { params.CREATE_REPORT == true }
+  agent { dockerfile true }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+                sh 'svn --version'
+            }
         }
-        steps { 
-          withAWS(region:'us-west-2', credentials: 'aws-static') {               
-              withEnv(["HOME=${env.WORKSPACE}"]) {
-              sh 'pip install --user -r requirements.txt'
-              sh 'jupyter nbconvert --to notebook --execute test1.ipynb' 
-                              
-        }
-          }
     }
-
-    }
-    
-  //   stage ('S3 COPY') {
-  //       when {
-  //           expression { params.COPY_S3 == true }
-  //       }
-  //       steps {
-          
-  //           retry(3) {
-  //               withAWS(region:'us-west-2', credentials: 'aws-static') {
-  //                   s3Upload(bucket:'pv-capstone-project' , includePathPattern:'**/*', excludePathPattern:'**/*.svg,**/*.jpg')
-  //               }
-  //           }
-            
-  //   }
-
-  // }
-    
-}   
 }
