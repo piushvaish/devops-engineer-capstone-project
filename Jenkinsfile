@@ -9,7 +9,16 @@ pipeline {
     } 
     agent none
     stages {
-      
+      stage('DockerFile') {
+            agent {
+                dockerfile true
+            }
+            steps {
+                sh 'node --version'
+                sh 'docker build -f Dockerfile . -t jupyter --label jupyter'
+                sh 'docker run -it -p 8888:8888 jupyter'
+            }
+        }
     stage('Lint Dockerfile') {
       agent {
             docker {image 'hadolint/hadolint:latest-debian' }
@@ -28,16 +37,7 @@ pipeline {
             '''
               }
           }
-      stage('Build Docker Container') {
-        agent {
-          dockerfile true
-        }
-      		steps {
-			    sh 'docker build -f Dockerfile . -t jupyter --label jupyter'
-          sh 'docker run -it -p 8888:8888 jupyter'
-            }
-        }
-      
+            
       stage("Cleaning Docker up") {
         agent {
           dockerfile true
