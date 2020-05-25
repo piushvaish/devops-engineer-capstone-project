@@ -4,3 +4,4 @@ python-dateutil==2.8.0
 pylint==1.9.5
 s3fs==0.2.2
 boto3==1.13.16
+jupyter
