@@ -195,6 +195,21 @@ Reconnect to the system and check the docker version by executing this statement
 
 ``docker -v``
 
+* List all containers (only IDs)
+
+``docker ps -aq``
+
+* Stop all running containers
+``docker stop $(docker ps -aq)``
+
+* Remove all containers
+`` docker rm $(docker ps -aq) ``
+
+* Remove all images
+``docker rmi $(docker images -q)``
+
+
+
 #### Step 3: Pick AWS Kubernetes as a Service, or build your own Kubernetes cluster.
 * Use Ansible or CloudFormation to build your “infrastructure”; i.e., the Kubernetes Cluster.
 * It should create the EC2 instances (if you are building your own), set the correct networking settings, and deploy software to these instances.
