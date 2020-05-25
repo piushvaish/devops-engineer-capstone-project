@@ -10,10 +10,11 @@ pipeline {
     agent none
     stages {
       stage('DockerFile') {
-            agent { dockerfile true }
+            agent {
+                docker {image 'piushvaish/capstone-project-jupyter:latest'}
+            }
             steps {
                 sh 'node --version'
-                sh 'docker build -f Dockerfile . -t jupyter --label jupyter'
                 sh 'docker run -it -p 8888:8888 jupyter'
             }
         }
@@ -37,7 +38,8 @@ pipeline {
           }
             
       stage("Cleaning Docker up") {
-        agent { dockerfile true  }
+        docker {image 'piushvaish/capstone-project-jupyter:latest'}
+        }
                     steps {
                 script {
                     sh "echo 'Cleaning Docker up'"
