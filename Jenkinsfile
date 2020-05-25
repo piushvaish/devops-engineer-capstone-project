@@ -10,9 +10,7 @@ pipeline {
     agent none
     stages {
       stage('DockerFile') {
-            agent {
-                dockerfile true
-            }
+            agent { dockerfile true }
             steps {
                 sh 'node --version'
                 sh 'docker build -f Dockerfile . -t jupyter --label jupyter'
@@ -39,9 +37,7 @@ pipeline {
           }
             
       stage("Cleaning Docker up") {
-        agent {
-          dockerfile true
-        }
+        agent { dockerfile true  }
                     steps {
                 script {
                     sh "echo 'Cleaning Docker up'"
