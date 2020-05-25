@@ -222,12 +222,23 @@ Then restart Jenkins
 * It should create the EC2 instances (if you are building your own), set the correct networking settings, and deploy software to these instances.
 * As a final step, the Kubernetes cluster will need to be initialized. The Kubernetes cluster initialization can either be done by hand, or with Ansible/Cloudformation at the student’s discretion.
 
+Image is available at [dockerhub](https://hub.docker.com/repository/docker/piushvaish/capstone-project-jupyter/general)
+
+run ``sh run_kubernetes.sh``
+
+###### the text from extract is available at : 
+
+* out_kubernetes.txt
+
 #### Step 4: Build your pipeline
 * Construct your pipeline in your GitHub repository.
 * Set up all the steps that your pipeline will include.
 * Configure a deployment pipeline.
 * Include your Dockerfile/source code in the Git repository.
 * Include with your Linting step both a failed Linting screenshot and a successful Linting screenshot to show the Linter working properly.
+![Failed Linting](images/lintfail.png)
+
+![Successful Linting](images/lintingworking.png)
 
 
 #### Step 5: Test your pipeline

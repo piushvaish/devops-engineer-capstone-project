@@ -1,0 +1,46 @@
+$ start.sh
+Starting Kubernetes...minikube version: v1.8.1
+commit: cbda04cf6bbe65e987ae52bb393c10099ab62014
+* minikube v1.8.1 on Ubuntu 18.04
+* Using the none driver based on user configuration
+* Running on localhost (CPUs=2, Memory=2460MB, Disk=145651MB) ...
+* OS release is Ubuntu 18.04.4 LTS
+
+
+$ kubectl run jupyterapi --generator=run-pod/v1 --image="piushvaish/capstone-project-jupyter" --port=8888 --labels app=jupyterapi
+pod/jupyterapi created
+$ kubectl get pods
+NAME         READY   STATUS              RESTARTS   AGE
+jupyterapi   0/1     ContainerCreating   0          32s
+$ kubectl config view
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /root/.minikube/ca.crt
+    server: https://172.17.0.11:8443
+  name: minikube
+contexts:
+- context:
+    cluster: minikube
+    user: minikube
+  name: minikube
+current-context: minikube
+kind: Config
+preferences: {}
+users:
+- name: minikube
+  user:
+    client-certificate: /root/.minikube/client.crt
+    client-key: /root/.minikube/client.key
+$
+$ kubectl port-forward jupyterapi 8888:8888
+error: unable to forward port because pod is not running. Current status=Pending
+$ kubectl get pods
+NAME         READY   STATUS    RESTARTS   AGE
+jupyterapi   1/1     Running   0          103s
+$ kubectl port-forward jupyterapi 8888:8888
+Forwarding from 127.0.0.1:8888 -> 8888
+Forwarding from [::1]:8888 -> 8888
+$ kubectl get services
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   7m6s
