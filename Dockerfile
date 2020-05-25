@@ -1,5 +1,5 @@
 # Start from a core stack version
-FROM jupyter/datascience-notebook:9f9e5ca8fe5a
+FROM jupyter/minimal-notebook
 # Install from requirements.txt file
 COPY requirements.txt /tmp/
 RUN pip install --requirement /tmp/requirements.txt && \
