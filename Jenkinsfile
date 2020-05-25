@@ -65,14 +65,13 @@ pipeline {
                 expression { params.COPY_S3 == true }
             }
             steps {
+              
+                retry(3) {
+                    withAWS(region:'us-west-2', credentials: 'aws-static') {
+                        s3Upload(bucket:'pv-capstone-project' , includePathPattern:'**/*', excludePathPattern:'**/*.svg,**/*.jpg')
+                    }
+                }
                 
-                  script {
-                 sh """
-                 
-                aws s3 cp *.csv s3://$BUCKET_NAME --acl bucket-owner-full-control
-                 """
-
-            }
         }
 
        }
