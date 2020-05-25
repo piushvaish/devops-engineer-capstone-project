@@ -236,5 +236,3 @@ Then restart Jenkins
 * Take a screenshot of the Jenkins pipeline showing deployment and a screenshot of your AWS EC2 page showing the newly created (for blue/green) or modified (for rolling) instances. Make sure you name your instances differently between blue and green deployments.
 
 
-* Blue/Green branch corresponds to the Blue/Green deployment strategy. Make sure that you checkout branches "blue" and "green" to see how blue/green deployment was performed in the course.
-* You can create any more branches for a multiple pipeline set-up, as directed in the demonstration video. 
