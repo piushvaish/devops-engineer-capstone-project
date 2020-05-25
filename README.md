@@ -236,9 +236,9 @@ run ``sh run_kubernetes.sh``
 * Configure a deployment pipeline.
 * Include your Dockerfile/source code in the Git repository.
 * Include with your Linting step both a failed Linting screenshot and a successful Linting screenshot to show the Linter working properly.
-![Failed Linting](images/lintfail.png)
+![Failed Linting](images/lintfail.PNG)
 
-![Successful Linting](images/lintingworking.png)
+![Successful Linting](images/lintingworking.PNG)
 
 
 #### Step 5: Test your pipeline
