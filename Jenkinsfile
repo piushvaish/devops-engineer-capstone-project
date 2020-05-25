@@ -7,7 +7,7 @@ pipeline {
       buildDiscarder(logRotator(numToKeepStr:'10'))
       timeout (time: 120, unit: 'MINUTES')
     } 
-    agent none
+    agent any
     stages {
     
     stage('Lint Dockerfile') {
@@ -34,7 +34,7 @@ pipeline {
                 docker {image 'piushvaish/capstone-project-jupyter:latest'}
             }
             steps {
-                sh 'docker build '
+                sh 'docker build -t jupyter .'
                 sh 'docker run -it -p 8888:8888 jupyter'
             }
         }    
