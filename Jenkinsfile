@@ -78,48 +78,8 @@ pipeline {
        }
     
 }
- 
-    post {
-               
-        aborted {
-            emailext (
-                attachLog: true,
-                subject: '[ABORTED] $PROJECT_NAME - BuildNumber:$BUILD_NUMBER',
-                to: "${env.SUPPORT_GROUP}" ,
-                replyTo: "${env.SUPPORT_GROUP}",
-                body: '''You are receiving this email because Report was TRIGGERED.\n\nReview the build logs to know more about the build.\n\nBuild URL: ${BUILD_URL}'''
-            )
-        }
-        unstable {
-            emailext (
-                attachLog: true,
-                subject: '[UNSTABLE] $PROJECT_NAME - BuildNumber:$BUILD_NUMBER',
-                to: "${env.SUPPORT_GROUP}",
-                replyTo: "${env.SUPPORT_GROUP}",
-                body: '''You are receiving this email because Report was TRIGGERED .\n\nReview the build logs to know more about the build.\n\nBuild URL: ${BUILD_URL}'''
-            )
-        }
-        failure {
-            emailext (
-                attachLog: true,
-                subject: '[FAILURE] $PROJECT_NAME - BuildNumber:$BUILD_NUMBER',
-                to: "${env.SUPPORT_GROUP}",
-                replyTo: "${env.SUPPORT_GROUP}",
-                body: '''You are receiving this email because Report was TRIGGERED.\n\nReview the build logs to know more about the build.\n\nBuild URL: ${BUILD_URL}'''
-            )
 
-        }
-        success {
-            emailext (
-                attachLog: true,
-                subject: '[SUCCESS] $PROJECT_NAME - BuildNumber:$BUILD_NUMBER',
-                to: "${env.SUPPORT_GROUP}",
-                replyTo: "${env.SUPPORT_GROUP}",
-                body: '''You are receiving this email because Report was TRIGGERED.\n\nReview the build logs to know more about the build.\n\nBuild URL: ${BUILD_URL}.'''
-            )
-        }
-
-        always { 
+always { 
             cleanWs()
          }
   
