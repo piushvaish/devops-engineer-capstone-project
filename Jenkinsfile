@@ -7,10 +7,6 @@ pipeline {
         timeout (time: 120, unit: 'MINUTES')
     } 
 
-    environment {       
-          SUPPORT_GROUP = "ahavars@gmail.com"
-          AWS_ACC_ID = sh(returnStdout:true, script: 'aws sts get-caller-identity --output text --query "Account"').trim()
-    }
 
     parameters {   
       /*  choice (name: 'PREFIX',
@@ -33,12 +29,7 @@ pipeline {
             label "master"
         }    
     }
-    /*
-    triggers {
-        cron('55 09 * * *')
-        }
-   
-    */    
+    
 
     stages {     
         stage ('CONFIGURE: Check Python Template  ') {
@@ -78,46 +69,6 @@ pipeline {
     
 }
  
-    post {
-               
-        aborted {
-            emailext (
-                attachLog: true,
-                subject: '[ABORTED] $PROJECT_NAME - BuildNumber:$BUILD_NUMBER',
-                to: "${env.SUPPORT_GROUP}" ,
-                replyTo: "${env.SUPPORT_GROUP}",
-                body: '''You are receiving this email because Report was TRIGGERED.\n\nReview the build logs to know more about the build.\n\nBuild URL: ${BUILD_URL}'''
-            )
-        }
-        unstable {
-            emailext (
-                attachLog: true,
-                subject: '[UNSTABLE] $PROJECT_NAME - BuildNumber:$BUILD_NUMBER',
-                to: "${env.SUPPORT_GROUP}",
-                replyTo: "${env.SUPPORT_GROUP}",
-                body: '''You are receiving this email because Report was TRIGGERED .\n\nReview the build logs to know more about the build.\n\nBuild URL: ${BUILD_URL}'''
-            )
-        }
-        failure {
-            emailext (
-                attachLog: true,
-                subject: '[FAILURE] $PROJECT_NAME - BuildNumber:$BUILD_NUMBER',
-                to: "${env.SUPPORT_GROUP}",
-                replyTo: "${env.SUPPORT_GROUP}",
-                body: '''You are receiving this email because Report was TRIGGERED.\n\nReview the build logs to know more about the build.\n\nBuild URL: ${BUILD_URL}'''
-            )
-
-        }
-        success {
-            emailext (
-                attachLog: true,
-                subject: '[SUCCESS] $PROJECT_NAME - BuildNumber:$BUILD_NUMBER',
-                to: "${env.SUPPORT_GROUP}",
-                replyTo: "${env.SUPPORT_GROUP}",
-                body: '''You are receiving this email because Report was TRIGGERED.\n\nReview the build logs to know more about the build.\n\nBuild URL: ${BUILD_URL}.'''
-            )
-        }
-
         always { 
             cleanWs()
          }
