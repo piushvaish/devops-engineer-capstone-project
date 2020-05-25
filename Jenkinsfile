@@ -1,3 +1,6 @@
+#!/usr/bin/groovy
+import groovy.json.JsonOutput
+//
 pipeline {
   options {
         buildDiscarder(logRotator(numToKeepStr:'10'))
