@@ -2,28 +2,24 @@
 import groovy.json.JsonOutput
 //
 pipeline {
+  environment {
+        dockerhubCredentials = 'dockercredentials'
+    }
   
   options {
       buildDiscarder(logRotator(numToKeepStr:'10'))
       timeout (time: 120, unit: 'MINUTES')
     } 
-
-  
-
-
-  agent { dockerfile true }
-    stages {
-      stage('Initialize'){
-        def dockerHome = tool 'myDocker'
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
-    }
-    
-        stage('Test') {
+      stage('Test') {
             steps {
                 sh 'node --version'
             }
         }
 
+
+  
+
+      
         stage('Lint Dockerfile') {
             steps {
                 script {
