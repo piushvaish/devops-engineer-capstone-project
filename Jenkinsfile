@@ -33,7 +33,7 @@ stages {
                 def workspace = pwd()
                 env.WORKSPACE = workspace
               sh """ 
-              pwd
+              pip install --user -r requirements.txt
               python3 test1.py 
             
               """
