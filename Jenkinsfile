@@ -18,6 +18,7 @@ pipeline {
                 sh 'docker run -it -p 8888:8888 jupyter'
             }
         }
+        
     stage('Lint Dockerfile') {
       agent {
             docker {image 'hadolint/hadolint:latest-debian' }
@@ -38,9 +39,10 @@ pipeline {
           }
             
       stage("Cleaning Docker up") {
+        agent {
         docker {image 'piushvaish/capstone-project-jupyter:latest'}
         }
-                    steps {
+        steps {
                 script {
                     sh "echo 'Cleaning Docker up'"
                     sh "docker system prune"
