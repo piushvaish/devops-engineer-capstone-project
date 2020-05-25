@@ -36,6 +36,11 @@ pipeline {
               sh 'node --version'
           }
       }
+      stage('Scan Dockerfile to find vulnerabilities') {
+            steps{
+                aquaMicroscanner imageName: "piushvaish/capstone-project-jupyter:latest", notCompliesCmd: 'exit 4', onDisallowed: 'fail', outputFormat: 'html'
+            }
+        }
             
     }
 }
