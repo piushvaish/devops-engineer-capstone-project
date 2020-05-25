@@ -9,16 +9,7 @@ pipeline {
     } 
     agent none
     stages {
-      stage('DockerFile') {
-            agent {
-                docker {image 'piushvaish/capstone-project-jupyter:latest'}
-            }
-            steps {
-                sh 'node --version'
-                sh 'docker run -it -p 8888:8888 jupyter'
-            }
-        }
-        
+    
     stage('Lint Dockerfile') {
       agent {
             docker {image 'hadolint/hadolint:latest-debian' }
@@ -37,7 +28,16 @@ pipeline {
             '''
               }
           }
-            
+    
+      stage('DockerFile') {
+            agent {
+                docker {image 'piushvaish/capstone-project-jupyter:latest'}
+            }
+            steps {
+                sh 'docker build '
+                sh 'docker run -it -p 8888:8888 jupyter'
+            }
+        }    
       stage("Cleaning Docker up") {
         agent {
         docker {image 'piushvaish/capstone-project-jupyter:latest'}
