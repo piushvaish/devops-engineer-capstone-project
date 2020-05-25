@@ -20,7 +20,9 @@ pipeline {
               defaultValue: true) 
     }
     
-  agent any
+  agent {
+    dockerfile true 
+  }
     
 
 stages {     
