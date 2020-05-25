@@ -1,5 +1,5 @@
 # Start from a core stack version
-FROM jupyter/minimal-notebook:latest
+FROM jupyter/minimal-notebook:dc57157d6316
 # Install from requirements.txt file
 COPY requirements.txt /tmp/
 RUN pip install --requirement /tmp/requirements.txt && \
