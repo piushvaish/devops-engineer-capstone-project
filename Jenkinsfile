@@ -8,7 +8,6 @@ pipeline {
     environment {       
           SUPPORT_GROUP = "ahavars@gmail.com"
           AWS_ACC_ID = sh(returnStdout:true, script: 'aws sts get-caller-identity --output text --query "Account"').trim()
-          PV-DEVOPS = '8746-1031-5471'
     }
 
     parameters {   
