@@ -7,7 +7,6 @@ pipeline {
       buildDiscarder(logRotator(numToKeepStr:'10'))
       timeout (time: 120, unit: 'MINUTES')
     } 
-    agent none
     stages {
       stage('DockerFile') {
             agent {
@@ -35,8 +34,21 @@ pipeline {
             '''
               }
           }
+      stage('Build Docker Container') {
+        agent {
+          dockerfile true
+        }
+      		steps {
+			    sh 'docker build -f Dockerfile . -t jupyter --label jupyter'
+          sh 'docker run -it -p 8888:8888 jupyter'
+            }
+        }
+      
       stage("Cleaning Docker up") {
-            steps {
+        agent {
+          dockerfile true
+        }
+                    steps {
                 script {
                     sh "echo 'Cleaning Docker up'"
                     sh "docker system prune"
