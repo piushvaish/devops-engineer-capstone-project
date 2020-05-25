@@ -37,8 +37,11 @@ pipeline {
           }
       }
       stage('Scan Dockerfile to find vulnerabilities') {
+        agent {
+              dockerfile true
+          }
             steps{
-                aquaMicroscanner imageName: "piushvaish/capstone-project-jupyter:latest", notCompliesCmd: 'exit 4', onDisallowed: 'fail', outputFormat: 'html'
+                aquaMicroscanner , notCompliesCmd: 'exit 4', onDisallowed: 'fail', outputFormat: 'html'
             }
         }
             
