@@ -12,6 +12,7 @@ import warnings
 import secrets_manager
 import json
 get_secret = json.loads(secrets_manager.get_secret())
+print(get_secret)
 key = get_secret.get('key')
 secret = get_secret.get('secret')
 s3 = s3fs.S3FileSystem(anon = False, key=key, secret=secret)
