@@ -28,31 +28,33 @@ stages {
         when {
             expression { params.CREATE_REPORT == true }
         }
-        steps {                
+        steps { 
+          withAWS(region:'us-west-2', credentials: 'aws-static') {               
               withEnv(["HOME=${env.WORKSPACE}"]) {
               sh 'pip install --user -r requirements.txt'
-              sh 'python test1.py' 
+              sh 'jupyter nbconvert --to notebook --execute test1.ipynb' 
                               
         }
+          }
     }
 
     }
     
-    stage ('S3 COPY') {
-        when {
-            expression { params.COPY_S3 == true }
-        }
-        steps {
+  //   stage ('S3 COPY') {
+  //       when {
+  //           expression { params.COPY_S3 == true }
+  //       }
+  //       steps {
           
-            retry(3) {
-                withAWS(region:'us-west-2', credentials: 'aws-static') {
-                    s3Upload(bucket:'pv-capstone-project' , includePathPattern:'**/*', excludePathPattern:'**/*.svg,**/*.jpg')
-                }
-            }
+  //           retry(3) {
+  //               withAWS(region:'us-west-2', credentials: 'aws-static') {
+  //                   s3Upload(bucket:'pv-capstone-project' , includePathPattern:'**/*', excludePathPattern:'**/*.svg,**/*.jpg')
+  //               }
+  //           }
             
-    }
+  //   }
 
-  }
+  // }
     
 }   
 }
