@@ -7,6 +7,7 @@ pipeline {
       buildDiscarder(logRotator(numToKeepStr:'10'))
       timeout (time: 120, unit: 'MINUTES')
     } 
+    agent none
     stages {
       stage('DockerFile') {
             agent {
