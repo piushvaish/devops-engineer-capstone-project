@@ -219,11 +219,12 @@ Then restart Jenkins
 
 
 #### Step 3: Pick AWS Kubernetes as a Service, or build your own Kubernetes cluster.
-* Use Ansible or CloudFormation to build your “infrastructure”; i.e., the Kubernetes Cluster.
-* It should create the EC2 instances (if you are building your own), set the correct networking settings, and deploy software to these instances.
-* As a final step, the Kubernetes cluster will need to be initialized. The Kubernetes cluster initialization can either be done by hand, or with Ansible/Cloudformation at the student’s discretion.
+### Kubernetes (Minikube)
+Here is how I installed minikube:
 
-Image is available at [dockerhub](https://hub.docker.com/repository/docker/piushvaish/capstone-project-jupyter/general)
+[Reference](https://www.radishlogic.com/kubernetes/running-minikube-in-aws-ec2-ubuntu/)
+
+Docker Image is available at [dockerhub](https://hub.docker.com/repository/docker/piushvaish/capstone-project-jupyter/general)
 
 run ``sh run_kubernetes.sh``
 
@@ -232,19 +233,14 @@ run ``sh run_kubernetes.sh``
 * out_kubernetes.txt
 
 #### Step 4: Build your pipeline
-* Construct your pipeline in your GitHub repository.
-* Set up all the steps that your pipeline will include.
-* Configure a deployment pipeline.
-* Include your Dockerfile/source code in the Git repository.
-* Include with your Linting step both a failed Linting screenshot and a successful Linting screenshot to show the Linter working properly.
+
 ![Failed Linting](/images/lintfail.PNG)
 
 ![Successful Linting](/images/lintingworking.PNG)
 
 
 #### Step 5: Test your pipeline
-* Perform builds on your pipeline.
-* Verify that your pipeline works as you designed it.
-* Take a screenshot of the Jenkins pipeline showing deployment and a screenshot of your AWS EC2 page showing the newly created (for blue/green) or modified (for rolling) instances. Make sure you name your instances differently between blue and green deployments.
+![Blue Environment](/images/blue_environment.PNG)
+![Green Environment](/images/green_environment.PNG)
 
 
